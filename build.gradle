@@ -54,10 +54,6 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('bootBuildImage') {
-	runImage = 'paketobuildpacks/ubuntu-noble-run:latest'
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
