@@ -67,5 +67,11 @@ public class JejuController {
 	  model.addAttribute("main_jsp", "../jeju/list.jsp");
 	  return "main/main";
   }
+  @GetMapping("/jeju/find")
+  public String jeju_find(Model model)
+  {
+	  model.addAttribute("main_jsp", "../jeju/jeju_find.jsp");
+	  return "main/main";
+  }
   
 }

@@ -26,4 +26,16 @@ public class JejuServiceImpl implements JejuService{
 	// TODO Auto-generated method stub
 	return mapper.jejuTotalPage(contenttype);
   }
+
+  @Override
+  public List<JejuVO> jejuFindData(Map map) {
+	// TODO Auto-generated method stub
+	return mapper.jejuFindData(map);
+  }
+
+  @Override
+  public int jejuFindTotalPage(Map map) {
+	// TODO Auto-generated method stub
+	return mapper.jejuFindTotalPage(map);
+  }
 }
