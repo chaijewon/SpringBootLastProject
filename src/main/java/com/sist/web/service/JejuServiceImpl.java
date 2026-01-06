@@ -38,4 +38,10 @@ public class JejuServiceImpl implements JejuService{
 	// TODO Auto-generated method stub
 	return mapper.jejuFindTotalPage(map);
   }
+
+  @Override
+  public List<JejuVO> jejuTop4Data() {
+	// TODO Auto-generated method stub
+	return mapper.jejuTop4Data();
+  }
 }

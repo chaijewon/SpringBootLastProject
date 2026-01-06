@@ -38,4 +38,13 @@ public interface JejuMapper {
 	 */
 	public List<JejuVO> jejuFindData(Map map);
 	public int jejuFindTotalPage(Map map);
+	/*
+	 *   <select id="jejuTop4Data" resultType="com.sist.web.vo.JejuVO">
+    SELECT no,contentid,title,address,image1,hit,rownum
+    FROM (SELECT no,contentid,title,address,image1,hit 
+    FROM jejutravel ORDER BY hit DESC)
+    WHERE rownum&lt;=4
+  </select>
+	 */
+	public List<JejuVO> jejuTop4Data();
 }

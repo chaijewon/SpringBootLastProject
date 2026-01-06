@@ -39,4 +39,13 @@ public interface BusanMapper {
 	 */
 	public List<BusanVO> busanFindData(Map map);
 	public int busanFindTotalPage(String address);
+	/*
+	 *   <select id="busanTop4Data" resultType="com.sist.web.vo.BusanVO">
+		    SELECT no,contentid,title,address,image1,hit,rownum
+		    FROM (SELECT no,contentid,title,address,image1,hit 
+		    FROM jejutravel ORDER BY hit DESC)
+		    WHERE rownum&lt;=4
+		  </select>
+	 */
+	public List<BusanVO> busanTop4Data();
 }

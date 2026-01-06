@@ -87,5 +87,10 @@
     FROM seoultravel
     WHERE address LIKE '%'||#{address}||'%'
   </select>
-  
+  <select id="seoulTop5Data" resultType="com.sist.web.vo.SeoulVO">
+    SELECT no,contentid,title,address,image1,hit,rownum
+    FROM (SELECT no,contentid,title,address,image1,hit 
+    FROM seoultravel WHERE contenttype=39 ORDER BY hit DESC)
+    WHERE rownum&lt;=5
+  </select>
 </mapper>

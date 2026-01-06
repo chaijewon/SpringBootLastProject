@@ -10,4 +10,5 @@ public interface BusanService {
 	 public int busanTotalPage(int contenttype);
 	 public List<BusanVO> busanFindData(Map map);
 	 public int busanFindTotalPage(String address);
+	 public List<BusanVO> busanTop4Data();
 }

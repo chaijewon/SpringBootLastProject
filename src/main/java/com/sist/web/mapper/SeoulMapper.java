@@ -68,4 +68,12 @@ public interface SeoulMapper {
 	 */
 	public List<SeoulVO> seoulFindData(Map map);
 	public int seoulFindTotalPage(String address);
+	
+	/*<select id="seoulTop5Data" resultType="com.sist.web.vo.SeoulVO">
+    SELECT no,contentid,title,address,image1,hit,rownum
+    FROM (SELECT no,contentid,title,address,image1,hit 
+    FROM seoultravel WHERE contenttype=39 ORDER BY hit DESC)
+    WHERE rownum&lt;=5
+  </select>*/
+	public List<SeoulVO> seoulTop5Data();
 }

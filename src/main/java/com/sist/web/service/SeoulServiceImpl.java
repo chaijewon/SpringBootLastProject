@@ -46,6 +46,12 @@ public class SeoulServiceImpl implements SeoulService{
 		return mapper.seoulFindTotalPage(address);
 	}
 
+	@Override
+	public List<SeoulVO> seoulTop5Data() {
+		// TODO Auto-generated method stub
+		return mapper.seoulTop5Data();
+	}
+
 	// 구현 => mapper 
 	// 통합 => service
 	// 브라우저로 전송 : request(model) => Controller
