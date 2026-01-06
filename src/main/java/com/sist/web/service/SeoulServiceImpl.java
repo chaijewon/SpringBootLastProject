@@ -34,9 +34,21 @@ public class SeoulServiceImpl implements SeoulService{
 		return mapper.seoulAttractionDetailData(contentid);
 	}
 
-	
+	@Override
+	public List<SeoulVO> seoulFindData(Map map) {
+		// TODO Auto-generated method stub
+		return mapper.seoulFindData(map);
+	}
 
-	
-    
+	@Override
+	public int seoulFindTotalPage(String address) {
+		// TODO Auto-generated method stub
+		return mapper.seoulFindTotalPage(address);
+	}
+
+	// 구현 => mapper 
+	// 통합 => service
+	// 브라우저로 전송 : request(model) => Controller
+	//               JSON => RestController => ResponseBody
     
 }

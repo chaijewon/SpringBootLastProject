@@ -28,4 +28,6 @@ public interface SeoulService {
 	public List<SeoulVO> seoulListData(Map map);
 	public int seoulTotalPage(int contenttype);
 	public SeoulVO seoulAttractionDetailData(int contentid);
+	public List<SeoulVO> seoulFindData(Map map);
+	public int seoulFindTotalPage(String address);
 }
