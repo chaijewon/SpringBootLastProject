@@ -41,4 +41,7 @@ public interface MemberMapper {
   public void memberAuthorityInsert(String userid);
   
   // 비밀번호 검사 => 데이터 읽기 => session 저장 
+  @Select("SELECT * FROM project_member "
+		 +"WHERE userid=#{userid}")
+  public MemberVO memberInfodData(String userid);
 }
