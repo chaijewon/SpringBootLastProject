@@ -38,6 +38,7 @@ public class BoardServiceImpl implements BoardService{
    public void boardInsert(BoardVO vo) {
 	// TODO Auto-generated method stub
 	mapper.boardInsert(vo);
+	// return 생략
    }
 
    @Override
@@ -64,6 +65,18 @@ public class BoardServiceImpl implements BoardService{
 		mapper.boardUpdate(vo);
 	}
 	return result;
+   }
+
+   @Override
+   public boolean boardDelete(int no,String pwd) {
+	// TODO Auto-generated method stub
+	String db_pwd=mapper.boardGetPassword(no);
+	if(db_pwd.equals(pwd))
+	{
+		mapper.boardDelete(no);
+		return true; // 종료  => void인 경우에는 마지막줄에 자동 추가 
+	}
+	return false;
    }
    
    

@@ -37,6 +37,7 @@
     <section class="archive-area section_padding_80">
         <div class="container">
             <div class="row" style="width: 400px;margin: 0px auto">
+              <form method=post action="/board/delete_ok">
               <table class="table">
                <tbody>
                  <tr>
@@ -60,6 +61,7 @@
                  </tr>
                </tbody>
               </table>
+              </form>
             </div>
          </div>
     </section>

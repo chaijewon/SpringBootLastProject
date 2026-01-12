@@ -1,6 +1,7 @@
 package com.sist.web.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -54,7 +55,7 @@ public interface BoardMapper {
 		 +"OFFSET #{start} ROWS FETCH NEXT 12 ROWS ONLY")
   public List<BoardVO> boardListData(int start);
   
-  @Select("SELECT CEIL(COUNT(*)/12.0) FROM board")
+  @Select("SELECT CEIL(COUNT(*)/10.0) FROM board")
   public int boardTotalPage();
   
   @SelectKey(keyProperty = "no",resultType = int.class,before = true,
@@ -82,4 +83,8 @@ public interface BoardMapper {
 		 +"name=#{name},subject=#{subject},content=#{content} "
 		 +"WHERE no=#{no}")
   public void boardUpdate(BoardVO vo);
+  
+  @Delete("DELETE FROM board "
+		 +"WHERE no=#{no}")
+  public void boardDelete(int no);
 }

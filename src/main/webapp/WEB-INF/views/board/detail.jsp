@@ -70,6 +70,67 @@
                   </tr>
                 </tbody>
               </table>
+              <!-- Comment Area Start -->
+                            <div class="comment_area section_padding_50 clearfix">
+                                <h4 class="mb-30">2 Comments</h4>
+
+                                <ol>
+                                    <!-- Single Comment Area -->
+                                    <li class="single_comment_area">
+                                        <div class="comment-wrapper d-flex">
+                                            <!-- Comment Meta -->
+                                            <div class="comment-author">
+                                                <img src="/img/blog-img/17.jpg" alt="">
+                                            </div>
+                                            <!-- Comment Content -->
+                                            <div class="comment-content">
+                                                <span class="comment-date text-muted">27 Aug 2018</span>
+                                                <h5>Brandon Kelley</h5>
+                                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                                <a href="#">수정</a>
+                                                <a class="active" href="#">삭제</a>
+                                            </div>
+                                        </div>
+                                        
+                                    </li>
+                                    <li class="single_comment_area">
+                                        <div class="comment-wrapper d-flex">
+                                            <!-- Comment Meta -->
+                                            <div class="comment-author">
+                                                <img src="/img/blog-img/19.jpg" alt="">
+                                            </div>
+                                            <!-- Comment Content -->
+                                            <div class="comment-content">
+                                                <span class="comment-date text-muted">27 Aug 2018</span>
+                                                <h5>Brandon Kelley</h5>
+                                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
+                                                <a href="#">수정</a>
+                                                <a class="active" href="#">삭제</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <!-- Leave A Comment -->
+                            <div class="leave-comment-area section_padding_50 clearfix">
+                                <div class="comment-form">
+                                   
+                                    <form action="#" method="post" >
+                             
+                                        
+                                            <textarea name="message" cols="95" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+                                            <button type="submit" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;">댓글쓰기</button>
+                                        
+                                        
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+              
             </div>
         </div>
     </section>

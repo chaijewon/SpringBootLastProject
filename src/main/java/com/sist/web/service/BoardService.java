@@ -30,4 +30,6 @@ public interface BoardService {
 	  public BoardVO boardUpdateData(int no);
 	  
 	  public String boardUpdate(BoardVO vo);
+	  
+	  public boolean boardDelete(int no,String pwd);
 }

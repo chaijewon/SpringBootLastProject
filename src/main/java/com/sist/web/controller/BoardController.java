@@ -31,7 +31,7 @@ public class BoardController {
 	  if(page==null)
 		  page="1";
 	  int curpage=Integer.parseInt(page);
-	  List<BoardVO> list=bService.boardListData((curpage-1)*12);
+	  List<BoardVO> list=bService.boardListData((curpage-1)*10);
 	  int totalpage=bService.boardTotalPage();
 	  
 	  // 어떤 데이터 전송 => 데이터가 많은 경우 : BLOCK별 / 이전 ~ 다음 
@@ -89,7 +89,7 @@ public class BoardController {
 	  model.addAttribute("main_jsp", "../board/update.jsp");
 	  return "main/main";
   }
-  
+  // text/html:script/html text/plain:json 
   @PostMapping(value="/board/update_ok",produces = "text/html;charset=UTF-8")
   @ResponseBody
   public String board_update_ok(@ModelAttribute BoardVO vo)
@@ -118,4 +118,29 @@ public class BoardController {
 	  model.addAttribute("main_jsp", "../board/delete.jsp");
 	  return "main/main";
   }
+  @PostMapping("/board/delete_ok")
+  @ResponseBody // 생략이 가능 
+  public String board_delete_ok(
+    @RequestParam("no") int no,
+    @RequestParam("pwd") String pwd
+  )
+  {
+	  String res="";
+	  boolean b=bService.boardDelete(no,pwd);
+	  if(b==true)
+	  {
+		  res="<script>"
+			 +"location.href=\"/board/list\""
+			 +"</script>";
+	  }
+	  else
+	  {
+		  res="<script>"
+			 +"alert(\"비밀번호가 틀립니다!!\");"
+			 +"history.back();"
+			 +"</script>";
+	  }
+	  return res;
+  }
+  
 }
