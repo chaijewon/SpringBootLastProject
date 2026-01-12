@@ -3,7 +3,9 @@ package com.sist.web.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.web.vo.BoardVO;
 
@@ -32,4 +34,11 @@ public interface BoardService {
 	  public String boardUpdate(BoardVO vo);
 	  
 	  public boolean boardDelete(int no,String pwd);
+	  
+	  /*@Update("UPDATE board SET "
+				 +"replycount=#{replycount} "
+				 +"WHERE no=#{no}")*/
+	  //public void boardReplyCountUpdate(int replycount,int no);
+	  
+	  
 }

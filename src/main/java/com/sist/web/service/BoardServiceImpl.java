@@ -19,9 +19,10 @@ import lombok.RequiredArgsConstructor;
 import com.sist.web.mapper.*;
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService,BoardReplyService{
    private final BoardMapper mapper;
-
+   private final BoardReplyMapper bMapper;
+   
    @Override
    public List<BoardVO> boardListData(int start) {
 	// TODO Auto-generated method stub
@@ -77,6 +78,26 @@ public class BoardServiceImpl implements BoardService{
 		return true; // 종료  => void인 경우에는 마지막줄에 자동 추가 
 	}
 	return false;
+   }
+   /////////// 댓글 
+   @Override
+   public List<BoardReplyVO> boardReplyListData(int bno) {
+	// TODO Auto-generated method stub
+	return bMapper.boardReplyListData(bno);
+   }
+   // BI ==> 기타 (DB외 처리)
+   @Override
+   public int boardReplyCount(int bno) {
+	// TODO Auto-generated method stub
+	int count=bMapper.boardReplyCount(bno);
+	mapper.boardReplyCountUpdate(count, bno);
+	return count;
+   }
+
+   @Override
+   public void boardReplyInsert(BoardReplyVO vo) {
+	// TODO Auto-generated method stub
+	bMapper.boardReplyInsert(vo);
    }
    
    

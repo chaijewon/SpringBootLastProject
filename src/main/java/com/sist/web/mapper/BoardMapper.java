@@ -4,6 +4,7 @@ import java.util.*;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
@@ -87,4 +88,12 @@ public interface BoardMapper {
   @Delete("DELETE FROM board "
 		 +"WHERE no=#{no}")
   public void boardDelete(int no);
+  
+  @Update("UPDATE board SET "
+		 +"replycount=#{replycount} "
+		 +"WHERE no=#{no}")
+  public void boardReplyCountUpdate(
+    @Param("replycount") int replycount,
+    @Param("no") int no
+  );
 }

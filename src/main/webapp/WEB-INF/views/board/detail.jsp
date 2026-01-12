@@ -71,68 +71,101 @@
                 </tbody>
               </table>
               <!-- Comment Area Start -->
+                    <div id="comment">
                             <div class="comment_area section_padding_50 clearfix">
-                                <h4 class="mb-30">2 Comments</h4>
+                                <h4 class="mb-30">댓글 ({{count}})</h4>
 
                                 <ol>
                                     <!-- Single Comment Area -->
-                                    <li class="single_comment_area">
+                                    <li class="single_comment_area" v-for="(rvo,index) in list" :key="index">
                                         <div class="comment-wrapper d-flex">
                                             <!-- Comment Meta -->
                                             <div class="comment-author">
-                                                <img src="/img/blog-img/17.jpg" alt="">
+                                                <img src="/img/man.png" v-if="rvo.sex==='남자'">
+                                                <img src="/img/woman.png" v-else>
                                             </div>
                                             <!-- Comment Content -->
                                             <div class="comment-content">
-                                                <span class="comment-date text-muted">27 Aug 2018</span>
-                                                <h5>Brandon Kelley</h5>
-                                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                                                <a href="#">수정</a>
-                                                <a class="active" href="#">삭제</a>
+                                                <span class="comment-date text-muted">{{rvo.dbday}}</span>
+                                                <h5>{{rvo.name}}</h5>
+                                                <p>{{rvo.msg}}</p>
+                                                <a href="#" v-if="sessionId===rvo.id">수정</a>
+                                                <a class="active" href="#" v-if="sessionId===rvo.id">삭제</a>
                                             </div>
                                         </div>
                                         
                                     </li>
-                                    <li class="single_comment_area">
-                                        <div class="comment-wrapper d-flex">
-                                            <!-- Comment Meta -->
-                                            <div class="comment-author">
-                                                <img src="/img/blog-img/19.jpg" alt="">
-                                            </div>
-                                            <!-- Comment Content -->
-                                            <div class="comment-content">
-                                                <span class="comment-date text-muted">27 Aug 2018</span>
-                                                <h5>Brandon Kelley</h5>
-                                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                                                <a href="#">수정</a>
-                                                <a class="active" href="#">삭제</a>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    
                                 </ol>
                             </div>
 
                             <!-- Leave A Comment -->
-                            <div class="leave-comment-area section_padding_50 clearfix">
+                            <div class="leave-comment-area section_padding_50 clearfix"
+                             v-if="sessionId!==''"
+                            >
                                 <div class="comment-form">
                                    
                                     <form action="#" method="post" >
                              
                                         
-                                            <textarea name="message" cols="95" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
-                                            <button type="submit" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;">댓글쓰기</button>
+                                            <textarea ref="msg" v-model="msg" cols="80" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" @click="replyWrite()">댓글쓰기</button>
                                         
                                         
                                     </form>
                                 </div>
                             </div>
-
+                          </div>
+                          <script>
+                           const commentApp=Vue.createApp({
+                        	   data(){
+                        		   return {
+                        			   list:[],
+                        			   count:0,
+                        			   bno:'${vo.no}',
+                        			   sessionId:'${sessionScope.userid}',
+                        			   msg:''
+                        		   }
+                        	   },
+                        	   mounted(){
+                        		   this.dataRecv()
+                        	   },
+                        	   methods:{
+                        		   dataRecv(){
+                        			 axios.get('/reply/list_vue/',{
+                        				 params:{
+                        					 bno:this.bno
+                        				 }
+                        				 
+                        			 }).then(response=>{
+                        				 console.log(response.data)
+                        				 this.list=response.data.list
+                        				 this.count=response.data.count
+                        			 })  
+                        		   },
+                        		   replyWrite(){
+                        			   if(this.msg==='')
+                        			   {
+                        				   this.$refs.msg.focus()
+                        				   return
+                        			   }
+                        			   axios.post('/reply/insert_vue/',{
+                        				   bno:this.bno,
+                        				   msg:this.msg
+                        			   }).then(response=>{
+                        				 console.log(response.data)
+                        				 this.list=response.data.list
+                        				 this.count=response.data.count
+                        				 this.msg=''
+                        			 })  
+                        		   }
+                        	   }
+                           })
+                           commentApp.mount("#comment")
+                          </script>
                         </div>
                     </div>
-                </div>
               
-            </div>
-        </div>
     </section>
 </body>
 </html>
