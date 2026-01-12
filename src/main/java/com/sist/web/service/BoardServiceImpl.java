@@ -46,6 +46,25 @@ public class BoardServiceImpl implements BoardService{
 	mapper.boardHitIncrement(no);
 	return mapper.boardDetailData(no);
    }
+
+   @Override
+   public BoardVO boardUpdateData(int no) {
+	// TODO Auto-generated method stub
+	return mapper.boardDetailData(no);
+   }
+
+   @Override
+   public String boardUpdate(BoardVO vo) {
+	// TODO Auto-generated method stub
+	String result="no";
+	String db_pwd=mapper.boardGetPassword(vo.getNo());
+	if(db_pwd.equals(vo.getPwd()))
+	{
+		result="yes";
+		mapper.boardUpdate(vo);
+	}
+	return result;
+   }
    
    
 }

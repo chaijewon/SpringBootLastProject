@@ -73,4 +73,13 @@ public interface BoardMapper {
 		 +"FROM board "
 		 +"WHERE no=#{no}")
   public BoardVO boardDetailData(int no);
+  
+  @Select("SELECT pwd FROM board "
+		 +"WHERE no=#{no}")
+  public String boardGetPassword(int no);
+  
+  @Update("UPDATE board SET "
+		 +"name=#{name},subject=#{subject},content=#{content} "
+		 +"WHERE no=#{no}")
+  public void boardUpdate(BoardVO vo);
 }

@@ -26,4 +26,8 @@ public interface BoardService {
 				 +"FROM board "
 				 +"WHERE no=#{no}")*/
 	  public BoardVO boardDetailData(int no);
+	  
+	  public BoardVO boardUpdateData(int no);
+	  
+	  public String boardUpdate(BoardVO vo);
 }
