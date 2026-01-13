@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 </style>
+<script>
+const SESSION_ID='${sessionScope.userid}'
+const BNO='${param.no}'
+</script>
 </head>
 <body>
   <div class="breadcumb-area" style="background-image: url(/img/bg-img/breadcumb.jpg);">
@@ -78,11 +82,11 @@
               <!-- Comment Area Start -->
                     <div id="comment">
                             <div class="comment_area section_padding_50 clearfix">
-                                <h4 class="mb-30">댓글 ({{count}})</h4>
+                                <h4 class="mb-30">댓글 ({{store.count}})</h4>
 
                                 <ol>
                                     <!-- Single Comment Area -->
-                                    <li class="single_comment_area" v-for="(rvo,index) in list" :key="index">
+                                    <li class="single_comment_area" v-for="(rvo,index) in store.list" :key="index">
                                         <div class="comment-wrapper d-flex">
                                             <!-- Comment Meta -->
                                             <div class="comment-author">
@@ -94,20 +98,22 @@
                                                 <span class="comment-date text-muted">{{rvo.dbday}}</span>
                                                 <h5>{{rvo.name}}</h5>
                                                 <p>{{rvo.msg}}</p>
-                                                <a class="a-btn" v-if="sessionId===rvo.id"
-                                                    @click="toggleUpdate(rvo.no,rvo.msg)"
-                                                >{{upReplyNo===rvo.no?'취소':'수정'}}</a>
+                                                <a class="a-btn" v-if="store.sessionId===rvo.id"
+                                                    @click="store.toggleUpdate(rvo.no,rvo.msg)"
+                                                >{{store.upReplyNo===rvo.no?'취소':'수정'}}</a>
                                                 <a class="active a-btn" 
-                                                 v-if="sessionId===rvo.id"
-                                                 @click="replyDelete(rvo.no)">삭제</a>
+                                                 v-if="store.sessionId===rvo.id"
+                                                  @click="store.replyDelete(rvo.no)">삭제</a>
                                                 <div class="comment-form" style="padding-top:5px" 
-                                                 v-if="upReplyNo===rvo.no"
+                                                 v-if="store.upReplyNo===rvo.no"
                                                 >
 			                                   
 			                                      <form action="#" method="post" >
 			           
-			                                            <textarea ref="msg" v-model="updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
-			                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" @click="replyUpdate(rvo.no)">댓글수정</button>
+			                                            <textarea v-model="store.updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+			                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" 
+			                                             @click="store.replyUpdate(rvo.no)"
+			                                            >댓글수정</button>
 			                                     
 			                                      </form>
 			                                   </div>
@@ -124,21 +130,43 @@
 
                             <!-- Leave A Comment -->
                             <div class="leave-comment-area section_padding_50 clearfix"
-                             v-if="sessionId!==''"
+                             v-if="store.sessionId!==''"
                             >
                                 <div class="comment-form">
                                    
                                     <form action="#" method="post" >
                              
-                                            <textarea ref="msg" v-model="msg" cols="80" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
-                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" @click="replyWrite()">댓글쓰기</button>
+                                            <textarea ref="msgRef" v-model="store.msg" cols="80" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;"
+                                             @click="store.replyInsert(msgRef)"
+                                            >댓글쓰기</button>
                                      
                                     </form>
                                 </div>
                             </div>
                           </div>
+                          <script src="/vue/axios.js"></script>
+                          <script src="/vue/reply/boardReplyStore.js"></script>
                           <script>
-                           const commentApp=Vue.createApp({
+                           const {createApp,onMounted,ref} = Vue
+                           const {createPinia} = Pinia
+                           const commentApp=createApp({
+                        	   setup(){
+                        		   const store=useBoardReplyStore()
+                        		   const msgRef=ref(null)
+                        		   onMounted(()=>{
+                        			   store.sessionId=SESSION_ID
+                        			   store.replyListData(BNO)
+                        		   }) // useEffect(()=>{})
+                        		   return {
+                        			   store,
+                        			   msgRef
+                        		   }
+                        	   }
+                           })
+                           commentApp.use(createPinia())
+                           commentApp.mount('#comment')
+                           /* const commentApp=Vue.createApp({
                         	   data(){
                         		   return {
                         			   list:[],
@@ -213,7 +241,7 @@
                         		   }
                         	   }
                            })
-                           commentApp.mount("#comment")
+                           commentApp.mount("#comment") */
                           </script>
                         </div>
                     </div>
