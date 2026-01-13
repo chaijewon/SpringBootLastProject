@@ -207,7 +207,7 @@
                         				   msg:this.updateMsg[no]
                         			   }).then(response=>{
                         				   this.list=response.data.list
-                        				   this.bno=response.data.bno
+                        				   
                         				   this.upReplyNo=null
                         			   })
                         		   }
