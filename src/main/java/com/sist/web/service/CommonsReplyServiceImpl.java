@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
  *                                        router => Vue/React 
  *     var / val  fun 함수명():String => data class Sawon(int age)
  */
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.web.mapper.CommonsReplyMapper;
 import com.sist.web.vo.CommonsReplyVO;
@@ -51,6 +52,25 @@ public class CommonsReplyServiceImpl implements CommonsReplyService{
 	public void commonsReplyInsert(CommonsReplyVO vo) {
 		// TODO Auto-generated method stub
 		mapper.commonsReplyInsert(vo);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void commonsDelete(int no) {
+		// TODO Auto-generated method stub
+		CommonsReplyVO vo=mapper.commonsInfoData(no);
+		if(vo.getDepth()==0)
+		{
+			mapper.commonsDelete(no);
+		}
+		else
+		{
+			CommonsReplyVO rvo=new CommonsReplyVO();
+			rvo.setNo(no);
+			rvo.setMsg("관리자에 의해 삭제된 댓글입니다");
+			mapper.commonsMsgUpdate(rvo);
+		}
+		mapper.commonsDepthDecrement(vo.getRoot());
 	}
 }
 

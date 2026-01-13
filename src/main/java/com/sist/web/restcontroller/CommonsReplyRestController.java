@@ -2,6 +2,7 @@ package com.sist.web.restcontroller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,5 +83,28 @@ public class CommonsReplyRestController {
 		   return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 	   }
 	   return new ResponseEntity<>(map,HttpStatus.OK);
+   }
+   
+   @DeleteMapping("/commons/delete_vue/")
+   public ResponseEntity<Map> commons_delete_vue(
+		      @RequestParam("no") int no,
+		      @RequestParam("page") int page,
+		      @RequestParam("cno") int cno
+   )
+   {
+	 System.out.println("no:"+no);
+	 System.out.println("cno:"+cno);
+	 System.out.println("page:"+page);
+	 Map map=new HashMap();
+	 try
+	 {
+		// 처리 
+		cService.commonsDelete(no);
+	    map=commonsData(page, cno);
+	 }catch(Exception ex)
+	 {
+		return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+	 }
+	 return new ResponseEntity<>(map,HttpStatus.OK);
    }
 }

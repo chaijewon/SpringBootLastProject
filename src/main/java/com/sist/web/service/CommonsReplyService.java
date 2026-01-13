@@ -27,5 +27,7 @@ public interface CommonsReplyService {
 			 +"VALUES(cs_no_seq.nextval,#{cno},#{id},#{name},"
 			 +"#{sex},#{msg},(SELECT NVL(MAX(group_id)+1,1) FROM commonsReply))")*/
 	  public void commonsReplyInsert(CommonsReplyVO vo);
+	  
+	  public void commonsDelete(int no);
 	
 }

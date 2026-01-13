@@ -10,6 +10,11 @@
 const SESSION_ID='${sessionScope.userid}'
 const CNO='${param.contentid}'
 </script>
+<style type="text/css">
+.page-link:hover, .a-btn{
+  cursor: pointer;
+}
+</style>
 </head>
 <body>
 <div class="breadcumb-area" style="background-image: url(/img/bg-img/breadcumb.jpg);">
@@ -113,7 +118,7 @@ const CNO='${param.contentid}'
               </table>
                     <script src="/vue/axios.js"></script>
                     <script src="/vue/reply/commonsReplyStore.js"></script>
-              <!-- Comment Area Start -->
+                    <!-- Comment Area Start -->
                     <div id="comment">
                             <div class="comment_area section_padding_50 clearfix">
                                 <h4 class="mb-30">댓글 ({{store.count}})</h4>
@@ -137,7 +142,11 @@ const CNO='${param.contentid}'
                                                 >{{store.upReplyNo===rvo.no?'취소':'수정'}}</a>
                                                 <a class="active a-btn" 
                                                  v-if="store.sessionId===rvo.id"
-                                                  @click="store.replyDelete(rvo.no)">삭제</a>
+                                                  @click="store.commonsDelete(rvo.no)">삭제</a>
+                                                <a class="a-btn" 
+                                                 v-if="store.sessionId!==null"
+                                                 >댓글</a>
+                                                  
                                                 <div class="comment-form" style="padding-top:5px" 
                                                  v-if="store.upReplyNo===rvo.no"
                                                 >
@@ -162,10 +171,9 @@ const CNO='${param.contentid}'
                                 </ol>
                             </div>
 
-                            <!-- Leave A Comment -->
-                            <div class="leave-comment-area section_padding_50 clearfix"
-                             v-if="store.sessionId!==''"
-                            >
+                             <div class="leave-comment-area section_padding_50 clearfix"
+                              v-if="store.sessionId!==''"
+                             >
                                 <div class="comment-form">
                                    
                                     <form action="#" method="post" >
@@ -178,8 +186,39 @@ const CNO='${param.contentid}'
                                     </form>
                                 </div>
                             </div>
-                            
-                          </div>
+                          
+                          
+                          <div class="col-12">
+                           <div class="pagination-area d-sm-flex mt-15">
+                             <nav aria-label="#">
+                             <ul class="pagination">
+                               
+                                <li class="page-item" v-if="store.startPage>1">
+                                    <a class="page-link" @click="store.movePage(store.startPage-1)">이전 <i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+                                </li>
+                               
+                               
+                               
+                                <li v-for="i in store.range" :class="i===store.curpage?'page-item active':'page-item'">
+                                    <a class="page-link" @click="store.movePage(i)">{{i}}</a>
+                                </li>
+                               
+                                
+                               
+                                <li class="page-item" v-if="store.endPage<store.totalpage">
+                                    <a class="page-link" @click="store.movePage(store.endPage+1)">다음 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                </li>
+                               
+                            </ul>
+                          </nav>
+                        <div class="page-status">
+                            <p>{{store.curpage }} page / {{store.totalpage }} pages</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                
                        <script>
                         const {onMounted,ref,createApp} = Vue
                         const {createPinia} = Pinia

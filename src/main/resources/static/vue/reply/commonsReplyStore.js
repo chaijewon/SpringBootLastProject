@@ -41,6 +41,7 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 		// prev() / next() / pageChange()
 		movePage(page){
 			this.curpage=page
+			this.commonsListData(this.cno)
 		},
 		async commonsListData(cno){
 			this.cno=cno
@@ -50,6 +51,7 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 					cno:cno
 				}		
 			})
+			console.log(res.data)
 			this.setPageData(res.data)
 		},
 		async commonsInsert(msgRef){
@@ -63,8 +65,19 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 				msg:this.msg
 			})
 			this.setPageData(res.data)
-		}
+		},
 		// 삭제 
+		async commonsDelete(no){
+			const res=await api.delete('/commons/delete_vue/',{
+			  params:{
+				no:no,
+				cno:this.cno,
+				page:this.curpage
+			  }
+				
+			})
+			this.setPageData(res.data)
+		}
 		// update 
 		// reply
 		

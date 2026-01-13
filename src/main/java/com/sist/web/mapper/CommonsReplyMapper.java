@@ -1,10 +1,12 @@
 package com.sist.web.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.sist.web.vo.*;
@@ -31,4 +33,21 @@ public interface CommonsReplyMapper {
 		 +"VALUES(cs_no_seq.nextval,#{cno},#{id},#{name},"
 		 +"#{sex},#{msg},(SELECT NVL(MAX(group_id)+1,1) FROM commonsReply))")
   public void commonsReplyInsert(CommonsReplyVO vo);
+  
+  @Select("SELECT root,depth FROM commonsReply "
+		 +"WHERE no=#{no}")
+  public CommonsReplyVO commonsInfoData(int no);
+  
+  @Update("UPDATE commonsReply SET "
+		 +"msg=#{msg} "
+		 +"WHERE no=#{no}")
+  public void commonsMsgUpdate(CommonsReplyVO vo);
+  
+  @Delete("DELETE FROM commonsReply WHERE no=#{no}")
+  public void commonsDelete(int no);
+  
+  @Update("UPDATE commonsReply SET "
+		 +"depth=depth-1 "
+		 +"WHERE no=#{no}")
+  public void commonsDepthDecrement(int no);
 }
