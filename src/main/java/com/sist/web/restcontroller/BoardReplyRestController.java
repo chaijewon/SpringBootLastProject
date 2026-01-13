@@ -1,7 +1,9 @@
 package com.sist.web.restcontroller;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,4 +68,21 @@ public class BoardReplyRestController {
     	return new ResponseEntity<>(map,HttpStatus.OK);
     }
     
+    @DeleteMapping("/reply/delete_vue/")
+    public ResponseEntity<Map> reply_delete_vue(
+      @RequestParam("no") int no,
+      @RequestParam("bno") int bno
+    )
+    {
+    	Map map=new HashMap();
+    	try
+    	{
+    		bService.boardReplyDelete(no);
+    		map=commonsData(bno);
+    	}catch(Exception ex)
+    	{
+    		return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    	return new ResponseEntity<>(map,HttpStatus.OK);
+    }
 }

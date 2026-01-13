@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.a-btn{
+  cursor: pointer;
+}
+</style>
 </head>
 <body>
   <div class="breadcumb-area" style="background-image: url(/img/bg-img/breadcumb.jpg);">
@@ -89,13 +94,31 @@
                                                 <span class="comment-date text-muted">{{rvo.dbday}}</span>
                                                 <h5>{{rvo.name}}</h5>
                                                 <p>{{rvo.msg}}</p>
-                                                <a href="#" v-if="sessionId===rvo.id">수정</a>
-                                                <a class="active" href="#" v-if="sessionId===rvo.id">삭제</a>
+                                                <a class="a-btn" v-if="sessionId===rvo.id"
+                                                    @click="toggleUpdate(rvo.no,rvo.msg)"
+                                                >{{upReplyNo===rvo.no?'취소':'수정'}}</a>
+                                                <a class="active a-btn" 
+                                                 v-if="sessionId===rvo.id"
+                                                 @click="replyDelete(rvo.no)">삭제</a>
+                                                <div class="comment-form" style="padding-top:5px" 
+                                                 v-if="upReplyNo===rvo.no"
+                                                >
+			                                   
+			                                      <form action="#" method="post" >
+			           
+			                                            <textarea ref="msg" v-model="updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+			                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" @click="replyUpdate(rvo.no)">댓글수정</button>
+			                                     
+			                                      </form>
+			                                   </div>
                                             </div>
+                                            
                                         </div>
-                                        
-                                    </li>
                                     
+			        
+			                                                                       
+                                    </li>
+                                     
                                 </ol>
                             </div>
 
@@ -107,11 +130,9 @@
                                    
                                     <form action="#" method="post" >
                              
-                                        
                                             <textarea ref="msg" v-model="msg" cols="80" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
                                             <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" @click="replyWrite()">댓글쓰기</button>
-                                        
-                                        
+                                     
                                     </form>
                                 </div>
                             </div>
@@ -124,7 +145,9 @@
                         			   count:0,
                         			   bno:'${vo.no}',
                         			   sessionId:'${sessionScope.userid}',
-                        			   msg:''
+                        			   msg:'',
+                        			   upReplyNo:null,
+                        			   updateMsg:{}
                         		   }
                         	   },
                         	   mounted(){
@@ -158,6 +181,35 @@
                         				 this.count=response.data.count
                         				 this.msg=''
                         			 })  
+                        		   },
+                        		   replyDelete(no){
+                        			   axios.delete('/reply/delete_vue/',{
+                        				 params:{
+                        					 bno:this.bno,
+                        				     no:no
+                        				 }
+                        				   
+                        			   }).then(response=>{
+                        				 console.log(response.data)
+                        				 this.list=response.data.list
+                        				 this.count=response.data.count
+                        				 
+                        			 })  
+                        		   },
+                        		   toggleUpdate(no,msg){
+                        			   this.upReplyNo=this.upReplyNo===no?null:no
+                        			   this.updateMsg[no]=msg
+                        		   },
+                        		   replyUpdate(no){
+                        			   axios.put("/reply/update_vue/",{
+                        				   no:no,
+                        				   bno:this.bno,
+                        				   msg:this.updateMsg[no]
+                        			   }).then(response=>{
+                        				   this.list=response.data.list
+                        				   this.bno=response.data.bno
+                        				   this.upReplyNo=null
+                        			   })
                         		   }
                         	   }
                            })

@@ -141,7 +141,7 @@
                                         <a class="dropdown-item" href="/board/list">자유게시판</a>
                                         <a class="dropdown-item" href="archive.html">공지사항</a>
                                         <sec:authorize access="isAuthenticated()">
-                                          <a class="dropdown-item" href="single.html">일대일채팅</a>
+                                          <a class="dropdown-item" href="/chatbot/chatbot">챗봇</a>
                                           <a class="dropdown-item" href="single.html">그룹채팅</a>
                                         </sec:authorize>
                                     </div>

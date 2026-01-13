@@ -1,6 +1,7 @@
 package com.sist.web.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,8 @@ public interface BoardReplyMapper {
 		  +"br_no_seq.nextval,#{bno},#{id},#{name},"
 		  +"#{sex},#{msg},SYSDATE)")
    public void boardReplyInsert(BoardReplyVO vo);
+   
+   @Delete("DELETE FROM board_reply "
+		  +"WHERE no=#{no}")
+   public void boardReplyDelete(int no);
 }
