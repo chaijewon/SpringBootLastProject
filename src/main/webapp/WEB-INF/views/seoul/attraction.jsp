@@ -110,7 +110,7 @@ const CNO='${param.contentid}'
 					        <div id="pagination"></div>
 					    </div>
 					</div>
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=72fa81817487692b6dc093004af97650&libraries=services"></script>
+					
 					<script src="/vue/map.js"></script>
                   </td>
                  </tr>
@@ -144,7 +144,7 @@ const CNO='${param.contentid}'
                                                  v-if="store.sessionId===rvo.id"
                                                   @click="store.commonsDelete(rvo.no)">삭제</a>
                                                 <a class="a-btn" 
-                                                 v-if="store.sessionId!==null"
+                                                 v-if="store.sessionId!==''"
                                                  >댓글</a>
                                                   
                                                 <div class="comment-form" style="padding-top:5px" 
