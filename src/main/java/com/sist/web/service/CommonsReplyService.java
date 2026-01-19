@@ -1,9 +1,11 @@
 package com.sist.web.service;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.web.vo.*;
 public interface CommonsReplyService {
@@ -29,5 +31,17 @@ public interface CommonsReplyService {
 	  public void commonsReplyInsert(CommonsReplyVO vo);
 	  
 	  public void commonsDelete(int no);
-	
+	  
+	  /*@Update("UPDATE commonsReply SET "
+				 +"msg=#{msg} "
+				 +"WHERE no=#{no}")*/
+	  public void commonsMsgUpdate(CommonsReplyVO vo);
+	  
+	  //@Delete("DELETE FROM commonsAllReply WHERE group_id=#{group_id}")
+	  //public void commonsAllDelete(int group_id);
+	  
+	  //@Delete("DELETE FROM commonsMyReply WHERE no=#{no}")
+	  //public void commonsMyDelete(int no);
+	  //public void commonsDelete(int no);
+	  
 }

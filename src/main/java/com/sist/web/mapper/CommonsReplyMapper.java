@@ -15,7 +15,7 @@ import com.sist.web.vo.*;
 public interface CommonsReplyMapper {
   @Select("SELECT no,cno,id,name,msg,sex,"
 		 +"TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') as dbday,"
-		 +"group_tab "
+		 +"group_tab,group_id "
 		 +"FROM commonsReply "
 		 +"WHERE cno=#{cno} "
 		 +"ORDER BY group_id DESC,group_step ASC "
@@ -34,7 +34,7 @@ public interface CommonsReplyMapper {
 		 +"#{sex},#{msg},(SELECT NVL(MAX(group_id)+1,1) FROM commonsReply))")
   public void commonsReplyInsert(CommonsReplyVO vo);
   
-  @Select("SELECT root,depth FROM commonsReply "
+  @Select("SELECT root,depth,group_id,group_step FROM commonsReply "
 		 +"WHERE no=#{no}")
   public CommonsReplyVO commonsInfoData(int no);
   
@@ -43,8 +43,11 @@ public interface CommonsReplyMapper {
 		 +"WHERE no=#{no}")
   public void commonsMsgUpdate(CommonsReplyVO vo);
   
-  @Delete("DELETE FROM commonsReply WHERE no=#{no}")
-  public void commonsDelete(int no);
+  @Delete("DELETE FROM commonsAllReply WHERE group_id=#{group_id}")
+  public void commonsAllDelete(int group_id);
+  
+  @Delete("DELETE FROM commonsMyReply WHERE no=#{no}")
+  public void commonsMyDelete(int no);
   
   @Update("UPDATE commonsReply SET "
 		 +"depth=depth-1 "

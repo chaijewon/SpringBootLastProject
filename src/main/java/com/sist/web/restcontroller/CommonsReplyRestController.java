@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -99,6 +100,7 @@ public class CommonsReplyRestController {
 	 try
 	 {
 		// 처리 
+		
 		cService.commonsDelete(no);
 	    map=commonsData(page, cno);
 	 }catch(Exception ex)
@@ -106,5 +108,22 @@ public class CommonsReplyRestController {
 		return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 	 }
 	 return new ResponseEntity<>(map,HttpStatus.OK);
+   }
+   @PutMapping("/commons/update_vue/")
+   public ResponseEntity<Map> commons_update(
+	 @RequestBody CommonsReplyVO vo	   
+   )
+   {
+	   Map map=new HashMap();
+	   try
+	   {
+		   cService.commonsMsgUpdate(vo);
+		   map=commonsData(vo.getPage(), vo.getCno());
+	   }catch(Exception ex)
+	   {
+		 return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+	   }
+	    return new ResponseEntity<>(map,HttpStatus.OK);
+	   
    }
 }

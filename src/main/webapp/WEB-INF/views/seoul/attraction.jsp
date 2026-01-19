@@ -126,7 +126,7 @@ const CNO='${param.contentid}'
                                 <ol>
                                     <!-- Single Comment Area -->
                                     <li class="single_comment_area" v-for="(rvo,index) in store.list" :key="index">
-                                        <div class="comment-wrapper d-flex">
+                                        <div class="comment-wrapper d-flex" v-if="rvo.group_tab===0">
                                             <!-- Comment Meta -->
                                             <div class="comment-author">
                                                 <img src="/img/man.png" v-if="rvo.sex==='남자'">
@@ -159,16 +159,68 @@ const CNO='${param.contentid}'
 			                                            >댓글수정</button>
 			                                     
 			                                      </form>
-			                                   </div>
+			                                     
+			                                    </div>
+			                                    
+			                                    
+			                                        
+                                               </div>
                                             </div>
-                                            
-                                        </div>
-                                    
-			        
-			                                                                       
+                                            <ol class="children" v-if="rvo.group_tab===1">
+		                                            <li class="single_comment_area">
+		                                                <div class="comment-wrapper d-flex">
+		                                                    <!-- Comment Meta -->
+		                                                    <div class="comment-author">
+		                                                        <img src="/img/man.png" v-if="rvo.sex==='남자'">
+		                                                        <img src="/img/woman.png" v-else>
+		                                                    </div>
+		                                                    <!-- Comment Content -->
+		                                                    <div class="comment-content">
+		                                                        <span class="comment-date text-muted">{{rvo.dbday}}</span>
+		                                                        <h5>{{rvo.name}}</h5>
+		                                                        <p>{{rvo.msg}}</p>
+		                                                        <a class="a-btn" v-if="store.sessionId===rvo.id"
+                                                                 @click="store.toggleUpdate(rvo.no,rvo.msg)"
+                                                                >{{store.upReplyNo===rvo.no?'취소':'수정'}}</a>
+		                                                        <a class="active" v-if="store.sessionId===rvo.id" class="a-link">삭제</a>
+		                                                        <div class="comment-form" style="padding-top:5px" 
+				                                                 v-if="store.upReplyNo===rvo.no"
+				                                                >
+							                                   
+							                                      <form action="#" method="post" >
+							           
+							                                            <textarea v-model="store.updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+							                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" 
+							                                             @click="store.replyUpdate(rvo.no)"
+							                                            >댓글수정</button>
+							                                     
+							                                      </form>
+							                                     
+							                                    </div>
+							                                    <%--><div class="comment-form" style="padding-top:5px" 
+				                                                 v-if="store.upReplyNo===rvo.no"
+				                                                >
+							                                   
+							                                      <form action="#" method="post" >
+							           
+							                                            <textarea v-model="store.updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+							                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" 
+							                                             @click="store.replyUpdate(rvo.no)"
+							                                            >댓글수정</button>
+							                                     
+							                                      </form>
+							                                     
+							                                    </div>--%>
+		                                                    </div>
+		                                                </div>
+		                                            </li>
+		                                        </ol>            
+			                                                       
                                     </li>
                                      
                                 </ol>
+                               
+                             
                             </div>
 
                              <div class="leave-comment-area section_padding_50 clearfix"
