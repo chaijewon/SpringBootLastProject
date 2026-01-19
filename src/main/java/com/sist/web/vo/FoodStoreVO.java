@@ -19,5 +19,5 @@ MSG           CLOB
 public class FoodStoreVO {
   private int no,contentid;
   private String firstmenu,treatmenu,infocenter,parking,
-          onpendate,opentime,restdate,msg;
+          opendate,opentime,restdate,msg;
 }
