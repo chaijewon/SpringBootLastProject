@@ -17,8 +17,7 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 		upReplyNo:null,
 		updateMsg:{},
 		reReplyNo:null,
-		reReplyMsg:{}
-		//update관련 
+		replyMsg:{}
 	}),
 	getters:{
 		//  페이지 출력 
@@ -70,6 +69,7 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 				msg:this.msg
 			})
 			this.setPageData(res.data)
+			this.msg=''
 		},
 		// 삭제 
 		async commonsDelete(no){
@@ -87,6 +87,7 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 		toggleUpdate(no,msg){
 			this.upReplyNo=this.upReplyNo===no?null:no
 			this.updateMsg[no]=msg
+			this.reReplyNo=null
 		},
 		// RestFul => select(get),delete(delete)
 		// update(put) , insert(post)
@@ -101,8 +102,23 @@ const useCommonsRepleStore=defineStore('commons_reply',{
 				})
 				this.setPageData(res.data)
 				this.upReplyNo=null
-		}
+		},
 		// reply
+		toggleReply(no,msg){
+			    this.reReplyNo=this.reReplyNo===no?null:no
+				//this.replyMsg[no]=msg
+				this.upReplyNo=null
+		},
+		async replyReply(no){
+			const res=await api.post('/commons/reply_reply_insert_vue/',{
+				no:no,
+			    cno:this.cno,
+				page:this.curpage,
+				msg:this.replyMsg[no]
+			})
+			this.setPageData(res.data)
+			this.reReplyNo=null
+		}
 		
 	}
 })

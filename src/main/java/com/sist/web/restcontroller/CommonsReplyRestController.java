@@ -126,4 +126,27 @@ public class CommonsReplyRestController {
 	    return new ResponseEntity<>(map,HttpStatus.OK);
 	   
    }
+   @PostMapping("/commons/reply_reply_insert_vue/")
+   public ResponseEntity<Map> commons_reply_reply(
+     @RequestBody CommonsReplyVO vo,HttpSession session
+   )
+   {
+	   Map map=new HashMap();
+	   try
+	   {
+		   String id=(String)session.getAttribute("userid");
+		   String name=(String)session.getAttribute("username");
+		   String sex=(String)session.getAttribute("sex");
+		   vo.setId(id);
+		   vo.setName(name);
+		   vo.setSex(sex);
+		   cService.commonsReplyReplyInsert(vo);
+		   map=commonsData(vo.getPage(), vo.getCno());
+	   }catch(Exception ex)
+	   {
+		 return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+	   }
+	    return new ResponseEntity<>(map,HttpStatus.OK);
+	    
+   }
 }

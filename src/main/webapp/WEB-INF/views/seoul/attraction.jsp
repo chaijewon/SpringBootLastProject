@@ -144,8 +144,8 @@ const CNO='${param.contentid}'
                                                  v-if="store.sessionId===rvo.id"
                                                   @click="store.commonsDelete(rvo.no)">삭제</a>
                                                 <a class="a-btn" 
-                                                 v-if="store.sessionId!==''"
-                                                 >댓글</a>
+                                                 v-if="store.sessionId!==''" @click="store.toggleReply(rvo.no)"
+                                                 >{{store.reReplyNo===rvo.no?'취소':'댓글'}}</a>
                                                   
                                                 <div class="comment-form" style="padding-top:5px" 
                                                  v-if="store.upReplyNo===rvo.no"
@@ -161,7 +161,20 @@ const CNO='${param.contentid}'
 			                                      </form>
 			                                     
 			                                    </div>
-			                                    
+			                                    <div class="comment-form" style="padding-top:5px" 
+				                                                 v-if="store.reReplyNo===rvo.no"
+				                                 >
+							                                   
+							                        <form action="#" method="post" >
+							           
+							                        <textarea v-model="store.replyMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
+							                        <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" 
+							                             @click="store.replyReply(rvo.no)"
+							                         >댓글</button>
+							                                     
+							                         </form>
+							                                     
+							                        </div>
 			                                    
 			                                        
                                                </div>
@@ -182,7 +195,7 @@ const CNO='${param.contentid}'
 		                                                        <a class="a-btn" v-if="store.sessionId===rvo.id"
                                                                  @click="store.toggleUpdate(rvo.no,rvo.msg)"
                                                                 >{{store.upReplyNo===rvo.no?'취소':'수정'}}</a>
-		                                                        <a class="active" v-if="store.sessionId===rvo.id" class="a-link">삭제</a>
+		                                                        <a class="active" v-if="store.sessionId===rvo.id" class="a-link" @click="store.commonsDelete(rvo.no)">삭제</a>
 		                                                        <div class="comment-form" style="padding-top:5px" 
 				                                                 v-if="store.upReplyNo===rvo.no"
 				                                                >
@@ -197,20 +210,7 @@ const CNO='${param.contentid}'
 							                                      </form>
 							                                     
 							                                    </div>
-							                                    <%--><div class="comment-form" style="padding-top:5px" 
-				                                                 v-if="store.upReplyNo===rvo.no"
-				                                                >
-							                                   
-							                                      <form action="#" method="post" >
-							           
-							                                            <textarea v-model="store.updateMsg[rvo.no]" cols="50" rows="5" placeholder="Message" style="float: left;display: inline-block;"></textarea>
-							                                            <button type="button" class="btn-primary" style="float: left;width: 80px;height: 100px;display: inline-block;" 
-							                                             @click="store.replyUpdate(rvo.no)"
-							                                            >댓글수정</button>
-							                                     
-							                                      </form>
-							                                     
-							                                    </div>--%>
+							                                    
 		                                                    </div>
 		                                                </div>
 		                                            </li>
