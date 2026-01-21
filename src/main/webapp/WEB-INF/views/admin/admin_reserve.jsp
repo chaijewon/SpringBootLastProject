@@ -43,7 +43,7 @@
            >승인대기</button>
            <span class="btn btn-xs btn-default" v-else>승인완료</span>
            <button class="btn-xs btn-warning" style="margin-left: 2px"
-            v-if="vo.iscancel===1" @click="store.reserveDelete(vo.no)"
+            v-if="vo.iscancel===1" @click="store.reserveDelete(vo.no,vo.id)"
            >취소</button>
          </th>
        </tr>

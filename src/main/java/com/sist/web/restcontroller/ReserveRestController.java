@@ -205,7 +205,8 @@ public class ReserveRestController {
   
   @GetMapping("/admin/reserve_delete_vue/")
   public ResponseEntity<List<ReserveVO>> admin_reserve_delete(
-      @RequestParam("no") int no
+      @RequestParam("no") int no,
+      @RequestParam("id") String id
   )
   {
 	  List<ReserveVO> list=new ArrayList<>();
@@ -213,6 +214,11 @@ public class ReserveRestController {
 	  {
 		  rService.reserveDelete(no);
 		  list=rService.reserveAdminData();
+		  
+		  template.convertAndSend(
+			  "/sub/notice/"+id,
+			  "[🎉예약 취소] 예약이 취소되었습니다!!"
+		  );
 	  }catch(Exception ex)
 	  {
 		 return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
