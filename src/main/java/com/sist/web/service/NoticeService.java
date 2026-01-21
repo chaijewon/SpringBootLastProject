@@ -20,4 +20,8 @@ public interface NoticeService {
 	   public NoticeVO noticeFileInfoData(int no);
 		   
 	   public void noticeDelete(int no);
+	   
+	   public NoticeVO noticeUpdateData(int no);
+	   
+	   public void noticeUpdate(NoticeVO vo);
 }

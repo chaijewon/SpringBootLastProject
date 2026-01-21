@@ -198,4 +198,26 @@ public class NoticeController {
 	  nService.noticeDelete(no);
 	  return "redirect:/admin/notice_list";
   }
+  @GetMapping("/admin/notice_update")
+  public String admin_notice_update(
+		@RequestParam("no") int no,  
+		Model model)
+  {
+	  NoticeVO vo=nService.noticeUpdateData(no);
+	  model.addAttribute("vo", vo);
+	  model.addAttribute("admin_jsp", "../admin/notice_update.jsp");
+	  model.addAttribute("main_jsp", "../admin/admin_main.jsp");
+	  return "main/main";
+  }
+  
+  @PostMapping("/admin/notice_update_ok")
+  public String admin_notice_update_ok(@ModelAttribute NoticeVO vo,
+	 RedirectAttributes ra  
+  )
+  {
+	  // 수정 
+	  nService.noticeUpdate(vo);
+	  ra.addAttribute("no",vo.getNo());
+	  return "redirect:/admin/notice_detail"; // ?no=1
+  }
 }

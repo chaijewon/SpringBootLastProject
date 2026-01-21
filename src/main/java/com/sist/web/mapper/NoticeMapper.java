@@ -43,4 +43,9 @@ public interface NoticeMapper {
    @Delete("DELETE FROM notice "
 		  +"WHERE no=#{no}")
    public void noticeDelete(int no);
+   
+   @Update("UPDATE notice SET "
+		  +"subject=#{subject},content=#{content},type=#{type} "
+		  +"WHERE no=#{no}")
+   public void noticeUpdate(NoticeVO vo);
 }
