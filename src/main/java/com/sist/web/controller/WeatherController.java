@@ -1,27 +1,33 @@
 package com.sist.web.controller;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.sist.web.weather.KmaWeatherService;
+import com.sist.web.service.WeatherService;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController
-
+@Controller
 @RequiredArgsConstructor
 public class WeatherController {
-
-    private final KmaWeatherService service;
-
-    @GetMapping("/api/weather")
-    public String test() {
-    	//System.out.println(service.getWeather());
-        return "";//service.getWeather();
-    }
-    
-   
+  private final WeatherService wService;
+  private final SimpMessagingTemplate template;
+  
+  @GetMapping("/weather2")
+  public String weather_page() {
+	  return "weather";
+  }
+  
+  @MessageMapping("/weather")
+  public void changeCity(@Payload String city)
+  { 
+	  System.out.println(wService.getWeather(city));
+	  template.convertAndSend(
+		 "/sub/weather",
+		 wService.getWeather(city)
+	  );
+  }
 }
-
-

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
  <!-- ****** Top Header Area Start ****** -->
@@ -167,6 +168,7 @@
             </div>
         </div>
     </header>
+    
     <!-- ****** Header Area End ****** -->
 </body>
 </html>
