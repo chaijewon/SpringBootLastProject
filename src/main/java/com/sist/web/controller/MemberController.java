@@ -38,6 +38,7 @@ public class MemberController {
 	   vo.setUserpwd(encoder.encode(vo.getUserpwd()));
 	   mService.memberInsert(vo);
 	   mService.memberAuthorityInsert(vo.getUserid());
+	   
 	   return "redirect:/main";
    }
    @RequestMapping("/member/login")
